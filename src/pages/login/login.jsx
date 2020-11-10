@@ -26,8 +26,17 @@ class Login extends Component {
     return this.historyListener;
   }
 
+  submitForm(payload) {
+    console.log(this.props.location.pathname);
+    if (this.props.location.pathname === '/register') {
+      this.props.register(payload);
+    } else {
+      this.props.login(payload);
+    }
+    
+  }
+
   render() {
-    const { submitForm } = this.props;
     const { location } = this.state;
     console.log('props', this.props);
     console.log('state', this.state);
@@ -51,7 +60,7 @@ class Login extends Component {
           onSubmit={(values, { setSubmitting }) => {
             console.log({values});
             console.log({setSubmitting});
-            submitForm(values);
+            this.submitForm(values);
             setSubmitting(false);
           }}
         >
@@ -86,15 +95,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    submitForm: payload => {
-      console.log(this);
-      console.log({payload});
-      if (this.state.location === 'register') {
-        dispatch(authAction.loginRequest(payload));
-      } else {
-        dispatch(authAction.registerRequest(payload));
-      }
-    }
+    register: (payload) => dispatch(authAction.registerRequest(payload)),
+    login: (payload) => dispatch(authAction.loginRequest(payload))
   }
 };
 
