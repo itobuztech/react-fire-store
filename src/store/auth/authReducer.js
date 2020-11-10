@@ -1,20 +1,22 @@
 import { AUTH } from './authConstants';
 
 const initialState = {
-  loginResponse: null,
-  registerResponse: null
+  loginError: null,
+  loggedInUser: null,
+  registerErr: null,
+  registeredUser: null
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTH.LOGIN_USER_SUCCESS:
-      return { ...state, loginResponse: action.response };
+      return { ...state, loggedInUser: action.response };
     case AUTH.LOGIN_USER_ERROR:
-      return { ...state, loginResponse: action.response };
+      return { ...state, loginError: action.response };
     case AUTH.REGISTER_USER_SUCCESS:
-        return { ...state, registerResponse: action.response };
+        return { ...state, registeredUser: action.response };
     case AUTH.REGISTER_USER_ERROR:
-        return { ...state, registerResponse: action.response };
+        return { ...state, registerErr: action.response };
     default:
       return state;
   }

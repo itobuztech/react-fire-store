@@ -3,17 +3,23 @@ import { auth } from './firebase';
 const authApi = {
   signIn: async ({email, password}) => {
     try {
-      return await auth.signInWithEmailAndPassword(email, password);
+      const signedInUser = await auth.signInWithEmailAndPassword(email, password);
+      return signedInUser.users[0];
     } catch(err) {
-      return err;
+      return err.error.message;
     }
   },
 
-  signUp: async ({ email, password }) => {
+  signUp: async ({ email, password, name }) => {
     try {
-      return await auth.createUserWithEmailAndPassword(email, password);
+      await auth.createUserWithEmailAndPassword(email, password);
+      let user = auth.currentUser;
+      user.updateProfile({
+        displayName: name
+      });
+      // user.providerData.forEach(pro => console.log(pro));
     } catch(err) {
-      return err;
+      return err.error.message;
     }
   }
 };
