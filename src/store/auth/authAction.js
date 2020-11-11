@@ -1,46 +1,46 @@
 import { AUTH } from './authConstants';
 
 const authAction = {
-  registerRequest: (user) => {
-    console.log({user});
+  registerRequest: (payload) => {
+    console.log({payload});
     return {
       type: AUTH.REGISTER_USER_REQUEST,
-      user
+      payload
     }
   },
 
-  registerSuccess: (msg) => {
+  registerSuccess: (payload) => {
     return {
       type: AUTH.REGISTER_USER_SUCCESS,
-      msg
+      payload
     }
   },
 
-  registerError: (error) => {
+  registerError: (payload) => {
     return {
       type: AUTH.REGISTER_USER_ERROR,
-      error
+      payload
     }
   },
 
-  loginRequest: (user) => {
+  loginRequest: (payload) => {
     return {
       type: AUTH.LOGIN_USER_REQUEST,
-      user
+      payload
     }
   },
 
-  loginSuccess: (msg) => {
+  loginSuccess: (payload) => {
     return {
       type: AUTH.LOGIN_USER_SUCCESS,
-      msg
+      payload
     }
   },
 
-  loginError: (error) => {
+  loginError: (payload) => {
     return {
       type: AUTH.LOGIN_USER_ERROR,
-      error
+      payload
     }
   }
 

@@ -9,20 +9,10 @@ import { RegisterOrLogin } from '../../components/register-or-login';
 import './login.scss';
 
 class Login extends Component {
-  state = {
-    location: '',
-  };
-
-  submitForm(payload) {
-    if (this.props.location.pathname === '/register') {
-      this.props.register(payload);
-    } else {
-      this.props.login(payload);
-    }
-  }
 
   render() {
-    const { location } = this.props;
+    const { path } = this.props;
+    console.log('props', this.props);
 
     return (
       <div className='login__wrapper'>
@@ -31,9 +21,9 @@ class Login extends Component {
             <Col md={{ span: 6, offset: 3 }}>
               <Card>
                 <Card.Body>
-                  <h2 className="text-center">{ location.pathname === '/register' ? 'Register' : 'Login' }</h2>
+                  <h2 className="text-center">{ path === '/register' ? 'Register' : 'Login' }</h2>
                   <Formik
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={{ name: '', email: '', password: '' }}
                     validate={(values) => {
                       const errors = {};
                       if (!values.email) {
@@ -54,7 +44,7 @@ class Login extends Component {
                   >
                     {({ isSubmitting }) => (
                       <Form>
-                        {location.pathname === '/register' ? (
+                        {path === '/register' ? (
                           <Row>
                             <Col className="form-group">
                               <Field type='text' name='name' className="form-control" />
@@ -76,12 +66,12 @@ class Login extends Component {
                         <Row>
                           <Col md={{ span: 4, offset: 4 }} className="text-center">
                             <Button type='submit' disabled={isSubmitting}>
-                              {location.pathname === '/register'
+                              {path === '/register'
                                 ? 'Register'
                                 : 'Submit'}
                             </Button>
                             <RegisterOrLogin
-                              pathname={location.pathname}
+                              pathname={path}
                             ></RegisterOrLogin>
                           </Col>
                         </Row>
@@ -96,12 +86,24 @@ class Login extends Component {
       </div>
     );
   }
+
+  submitForm(payload) {
+    if (this.props.path === '/register') {
+      this.props.register(payload);
+    } else {
+      this.props.login(payload);
+    }
+  }
+
 }
 
 const mapStateToProps = (state) => {
+  console.log({state});
   return {
-    loginResponse: state.authReducer,
-    registerResponse: state.authReducer,
+    loginError: state.authReducer.loginError,
+    registerErr: state.authReducer.registerErr,
+    loggedInUser: state.authReducer.loggedInUser,
+    registeredUser: state.authReducer.registeredUser
   };
 };
 

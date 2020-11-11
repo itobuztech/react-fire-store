@@ -2,21 +2,28 @@ import { AUTH } from './authConstants';
 
 const initialState = {
   loginError: null,
-  loggedInUser: null,
+  loggedInUser: JSON.parse(localStorage.getItem("user")) || {},
   registerErr: null,
-  registeredUser: null
+  registeredUser: null,
+  isAuthUser: !!localStorage.getItem("user"),
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH.LOGIN_USER_SUCCESS:
-      return { ...state, loggedInUser: action.response };
+    case AUTH.LOGIN_USER_SUCCESS: {
+      console.log({action});
+      localStorage.setItem("user", JSON.stringify(action.payload));
+      return { ...state, loggedInUser: action.payload };
+    }
     case AUTH.LOGIN_USER_ERROR:
-      return { ...state, loginError: action.response };
+      return { ...state, loginError: action.payload };
+    case AUTH.LOGOUT_USER:
+      localStorage.removeItem("user");
+      return { ...state,  }
     case AUTH.REGISTER_USER_SUCCESS:
-        return { ...state, registeredUser: action.response };
+        return { ...state, registeredUser: action.payload };
     case AUTH.REGISTER_USER_ERROR:
-        return { ...state, registerErr: action.response };
+        return { ...state, registerErr: action.payload };
     default:
       return state;
   }
