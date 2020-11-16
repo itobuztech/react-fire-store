@@ -14,7 +14,10 @@ const authApi = {
     });
   },
 
-  logOut: async () => await auth.signOut()
+  signOut: () => {
+    console.log('called');
+    return auth.signOut()
+  }
 };
 
 export { authApi };

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { withRouter } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
@@ -91,7 +92,7 @@ class Login extends Component {
     if (this.props.path === '/register') {
       this.props.register(payload);
     } else {
-      this.props.login(payload);
+      this.props.login(payload, this.props);
     }
   }
 
@@ -110,8 +111,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     register: (payload) => dispatch(authAction.registerRequest(payload)),
-    login: (payload) => dispatch(authAction.loginRequest(payload)),
+    login: (payload, props) => dispatch(authAction.loginRequest(payload, props)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

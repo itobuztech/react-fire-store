@@ -6,6 +6,8 @@ const initialState = {
   registerErr: null,
   registeredUser: null,
   isAuthUser: !!localStorage.getItem("user"),
+  signedOutSuccess: null,
+  signedOutError: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -17,13 +19,19 @@ const authReducer = (state = initialState, action) => {
     }
     case AUTH.LOGIN_USER_ERROR:
       return { ...state, loginError: action.payload };
-    case AUTH.LOGOUT_USER:
-      localStorage.removeItem("user");
-      return { ...state,  }
     case AUTH.REGISTER_USER_SUCCESS:
         return { ...state, registeredUser: action.payload };
     case AUTH.REGISTER_USER_ERROR:
         return { ...state, registerErr: action.payload };
+    case AUTH.LOGOUT_USER_SUCCESS: {
+      localStorage.removeItem("user");
+      console.log({action});
+      return { ...state, signedOutSuccess: action.payload };
+    }
+    case AUTH.LOGOUT_USER_ERROR: {
+      console.log({action});
+      return { ...state, signedOutError: action.payload };
+    }
     default:
       return state;
   }

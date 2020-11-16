@@ -23,10 +23,11 @@ const authAction = {
     }
   },
 
-  loginRequest: (payload) => {
+  loginRequest: (payload, props) => {
     return {
       type: AUTH.LOGIN_USER_REQUEST,
-      payload
+      payload,
+      props
     }
   },
 
@@ -40,6 +41,26 @@ const authAction = {
   loginError: (payload) => {
     return {
       type: AUTH.LOGIN_USER_ERROR,
+      payload
+    }
+  },
+
+  signoutRequest: () => {
+    return {
+      type: AUTH.LOGOUT_USER_REQUEST
+    }
+  },
+
+  signoutSuccess: (payload) => {
+    return {
+      type: AUTH.LOGOUT_USER_SUCCESS,
+      payload
+    }
+  },
+
+  signoutError: (payload) => {
+    return {
+      type: AUTH.LOGOUT_USER_ERROR,
       payload
     }
   }

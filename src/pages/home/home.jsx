@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 
+import { withRouter } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+
+import Header from '../../components/header/header';
 
 class Home extends Component {
   render() {
     return (
       <div>
-        <h1>home page</h1>
-        <Button type='submit'>sign out</Button>
+        <Header></Header>
       </div>
     );
   }
 }
 
-export default Home;
+export default withRouter(Home);
