@@ -8,7 +8,7 @@ import { authAction } from '../../store/auth/authAction';
 class Header extends Component {
 
   logOut = () => {
-    return this.props.signOut();
+    return this.props.signOut(this.props);
   }
 
   render() {
@@ -30,7 +30,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log({state});
+  console.log({ state });
   return {
     isAuthUser: state.authReducer.isAuthUser,
     signedOutSuccess: state.authReducer.signedOutSuccess,
@@ -39,9 +39,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  console.log({dispatch});
+  console.log({ dispatch });
   return {
-    signOut: () => dispatch(authAction.signoutRequest()),
+    signOut: (payload) => dispatch(authAction.signoutRequest(payload)),
   };
 };
 

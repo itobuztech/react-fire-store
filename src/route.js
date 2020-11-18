@@ -9,10 +9,10 @@ import AuthRoute from './components/auth-route.jsx';
 const routes = (
   <Switch>
     <AuthRoute path="/login" type="guest">
-      <Login path="login" />
+      <Login path="/login" />
     </AuthRoute>
     <AuthRoute path="/register" type="guest">
-      <Login path="register" />
+      <Login path="/register" />
     </AuthRoute>
     <AuthRoute path="/home" type="private">
       <Home />

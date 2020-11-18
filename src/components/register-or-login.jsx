@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-export const RegisterOrLogin = ({pathname}) => {
-  console.log({pathname});
-  if (pathname === '/') {
+export const RegisterOrLogin = ({ pathname }) => {
+  console.log({ pathname });
+  if (pathname === '/login') {
     return (
       <p>
         <Link to="/register">
@@ -13,7 +13,7 @@ export const RegisterOrLogin = ({pathname}) => {
   } else {
     return (
       <p>
-        <Link to="/">
+        <Link to="/login">
           login
         </Link>
       </p>

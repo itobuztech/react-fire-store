@@ -45,16 +45,16 @@ const authAction = {
     }
   },
 
-  signoutRequest: () => {
+  signoutRequest: (payload) => {
     return {
-      type: AUTH.LOGOUT_USER_REQUEST
+      type: AUTH.LOGOUT_USER_REQUEST,
+      payload
     }
   },
 
-  signoutSuccess: (payload) => {
+  signoutSuccess: () => {
     return {
-      type: AUTH.LOGOUT_USER_SUCCESS,
-      payload
+      type: AUTH.LOGOUT_USER_SUCCESS
     }
   },
 

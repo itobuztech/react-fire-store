@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-import { withRouter } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
-
 import Header from '../../components/header/header';
 
 class Home extends Component {
@@ -15,4 +12,4 @@ class Home extends Component {
   }
 }
 
-export default withRouter(Home);
+export default Home;

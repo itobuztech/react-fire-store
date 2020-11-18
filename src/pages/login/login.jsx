@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import { withRouter } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
@@ -22,7 +21,7 @@ class Login extends Component {
             <Col md={{ span: 6, offset: 3 }}>
               <Card>
                 <Card.Body>
-                  <h2 className="text-center">{ path === '/register' ? 'Register' : 'Login' }</h2>
+                  <h2 className="text-center">{path === '/register' ? 'Register' : 'Login'}</h2>
                   <Formik
                     initialValues={{ name: '', email: '', password: '' }}
                     validate={(values) => {
@@ -92,14 +91,14 @@ class Login extends Component {
     if (this.props.path === '/register') {
       this.props.register(payload);
     } else {
-      this.props.login(payload, this.props);
+      this.props.login(payload);
     }
   }
 
 }
 
 const mapStateToProps = (state) => {
-  console.log({state});
+  console.log({ state });
   return {
     loginError: state.authReducer.loginError,
     registerErr: state.authReducer.registerErr,
@@ -111,8 +110,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     register: (payload) => dispatch(authAction.registerRequest(payload)),
-    login: (payload, props) => dispatch(authAction.loginRequest(payload, props)),
+    login: (payload) => dispatch(authAction.loginRequest(payload)),
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
