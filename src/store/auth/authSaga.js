@@ -1,6 +1,7 @@
 import { takeLatest, call, put, fork, all } from "redux-saga/effects";
 
 import { createBrowserHistory } from 'history';
+import { toast } from 'react-toastify';
 
 import { authAction } from './authAction';
 import { authApi } from '../../services/auth-api';
@@ -16,6 +17,7 @@ function* workerLogin(action) {
     if (response) {
       yield put(authAction.loginSuccess(response));
       yield call(redirectTo, '/home');
+      toast.success('Logged in successfully');
     }
   } catch (error) {
     return yield put(authAction.loginError(error));
@@ -42,6 +44,7 @@ function* wokerSignout(action) {
     const response = yield call([authApi, 'signOut']);
     yield put(authAction.signoutSuccess(response))
     yield call(redirectTo, '/login');
+    toast.success('Loggedout successfully');
   } catch(error) {
     return yield put(authAction.signoutError(error));
   }
