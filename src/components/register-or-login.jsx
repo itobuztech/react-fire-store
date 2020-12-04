@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 export const RegisterOrLogin = ({ pathname }) => {
-  console.log({ pathname });
   if (pathname === '/login') {
     return (
       <p>

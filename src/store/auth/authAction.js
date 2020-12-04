@@ -2,7 +2,6 @@ import { AUTH } from './authConstants';
 
 const authAction = {
   registerRequest: (payload) => {
-    console.log({payload});
     return {
       type: AUTH.REGISTER_USER_REQUEST,
       payload

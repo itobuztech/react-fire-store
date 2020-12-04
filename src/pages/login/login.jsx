@@ -12,7 +12,6 @@ class Login extends Component {
 
   render() {
     const { path } = this.props;
-    console.log('props', this.props);
 
     return (
       <div className='login__wrapper'>
@@ -98,7 +97,6 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log({ state });
   return {
     loginError: state.authReducer.loginError,
     registerErr: state.authReducer.registerErr,

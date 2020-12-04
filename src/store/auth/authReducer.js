@@ -13,7 +13,6 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTH.LOGIN_USER_SUCCESS: {
-      console.log({action});
       localStorage.setItem("user", JSON.stringify(action.payload));
       return { ...state, loggedInUser: action.payload };
     }
@@ -25,11 +24,9 @@ const authReducer = (state = initialState, action) => {
         return { ...state, registerErr: action.payload };
     case AUTH.LOGOUT_USER_SUCCESS: {
       localStorage.removeItem("user");
-      console.log({action});
       return { ...state, signedOutSuccess: action.payload };
     }
     case AUTH.LOGOUT_USER_ERROR: {
-      console.log({action});
       return { ...state, signedOutError: action.payload };
     }
     default:

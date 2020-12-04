@@ -15,7 +15,6 @@ const authApi = {
   },
 
   signOut: () => {
-    console.log('called');
     return auth.signOut()
   }
 };

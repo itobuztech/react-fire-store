@@ -1,0 +1,7 @@
+const CART = {
+  ADD_TO_CART: 'ADD_TO_CART',
+  // ADD_TO_SUCCESS: 'ADD_TO_SUCCESS',
+  // ADD_TO_ERROR: 'ADD_TO_ERROR'
+};
+
+export { CART };

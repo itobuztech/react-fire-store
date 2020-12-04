@@ -1,12 +1,10 @@
 import { takeLatest, call, put, fork, all } from "redux-saga/effects";
 
-import { createBrowserHistory } from 'history';
 import { toast } from 'react-toastify';
 
 import { authAction } from './authAction';
 import { authApi } from '../../services/auth-api';
-
-const history = createBrowserHistory();
+import { redirectTo } from '../../route';
 
 function* watcherLogin() {
   yield takeLatest("LOGIN_USER_REQUEST", workerLogin);
@@ -48,10 +46,6 @@ function* wokerSignout(action) {
   } catch(error) {
     return yield put(authAction.signoutError(error));
   }
-}
-
-function redirectTo(location) {
-  history.go(location);
 }
 
 export default function* authSaga() {
