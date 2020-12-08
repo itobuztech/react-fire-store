@@ -7,7 +7,7 @@ import './product.scss';
 class Product extends Component {
 
   render() {
-    const { product, buy, edit, editClicked, deleteClicked } = this.props;
+    const { product, buy, edit, addToCartClicked, editClicked, deleteClicked } = this.props;
     return (
       <Card>
         <Card.Img variant="top" src={product.image} />
@@ -16,12 +16,11 @@ class Product extends Component {
           <Card.Text>
             {product.description}
           </Card.Text>
-          {/* onClick={() => this.buy()} */}
           {
             buy ?
             (
-              <Button variant="primary">
-                Buy
+              <Button variant="primary" onClick={() => addToCartClicked(product.id)}>
+                Add to Cart
               </Button>
             ): null
           }

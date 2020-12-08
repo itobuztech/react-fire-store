@@ -13,6 +13,10 @@ class Products extends Component {
     this.props.getProducts();
   }
 
+  buy = (id) => {
+    console.log({id});
+  }
+
   render() {
     const { products } = this.props;
 
@@ -23,7 +27,7 @@ class Products extends Component {
             { products.map((product, index) => {
               return (
                 <Col md={4} lg={4} key={index} className="mt-4">
-                  <Product product={product} buy={() => this.buy}></Product>
+                  <Product product={product} buy={true} addToCartClicked={(event) => this.buy(event)}></Product>
                 </Col>
               );
             })}
