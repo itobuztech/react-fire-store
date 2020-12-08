@@ -1,13 +1,13 @@
 import React, { Component }  from 'react';
 
 import { Card, Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
 
 import './product.scss';
 
 class Product extends Component {
+
   render() {
-    const { product, buy } = this.props;
+    const { product, buy, edit, editClicked, deleteClicked } = this.props;
     return (
       <Card>
         <Card.Img variant="top" src={product.image} />
@@ -17,13 +17,31 @@ class Product extends Component {
             {product.description}
           </Card.Text>
           {/* onClick={() => this.buy()} */}
-          <Button variant="primary">
-            Buy
-          </Button>
+          {
+            buy ?
+            (
+              <Button variant="primary">
+                Buy
+              </Button>
+            ): null
+          }
+          {
+            edit ?
+            (
+              <div className="d-flex justify-content-around align-items-center">
+                <Button variant="primary" onClick={editClicked}>
+                  Edit
+                </Button>
+                <Button variant="danger" onClick={deleteClicked}>
+                  Delete
+                </Button>
+              </div>
+            ): null
+          }
         </Card.Body>
       </Card>
     );
   }
 }
 
-export default connect()(Product);
+export default Product;

@@ -26,12 +26,25 @@ function* workerAddProduct(action) {
   try {
     const response = yield call(productsApi.addProducts, action.payload);
     if (response) {
-      const products = yield call(productsApi.getProducts);
-      yield put(productAction.addProductSuccess(products));
+      yield put(productAction.addProductSuccess(action.payload));
       toast.success('Product added successfully');
     }
   } catch(error) {
     yield put(productAction.addProductError(error));
+  }
+}
+
+function* watcherEditProduct() {
+  yield takeLatest("EDIT_PRODUCT_REQUEST", workerEditProduct);
+}
+
+function* workerEditProduct(action) {
+  try {
+    yield call(productsApi.editProduct, action.payload, action.docId);
+    yield put(productAction.editProductSuccess(action.payload, action.docId));
+    toast.success('Product updated successfully');
+  } catch(error) {
+    yield put(productAction.editProductError(error));
   }
 }
 
@@ -41,8 +54,9 @@ function* watcherDeleteProduct() {
 
 function* workerDeleteProduct(action) {
   try {
-    const response = yield call(productsApi.deleteProduct(), action.payload);
-    if (response) yield put(productAction.deleteProductSuccess(response));
+    yield call(productsApi.deleteProduct, action.id);
+    yield put(productAction.deleteProductSuccess(action.id));
+    toast.success('Product deleted successfully');
   } catch(error) {
     yield put(productAction.deleteProductError(error));
   }
@@ -52,6 +66,7 @@ export default function* productsSaga() {
   yield all([
     fork(watcherGetProduct),
     fork(watcherAddProduct),
+    fork(watcherEditProduct),
     fork(watcherDeleteProduct)
   ])
 };

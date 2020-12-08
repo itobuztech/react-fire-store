@@ -1,16 +1,17 @@
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-export const AddProductModal = ({ modalOpen, handleClose, submitForm }) => {
+export const AddProductModal = ({ modalOpen, handleClose, submitForm, selectedProductData }) => {
   return (
     <>
       <Formik
+        enableReinitialize={true}
         initialValues={{
-          category: '',
-          description: '',
-          image: '',
-          price: '',
-          title: '',
+          category: selectedProductData ? selectedProductData.category : '',
+          description: selectedProductData ? selectedProductData.description : '',
+          image: selectedProductData ? selectedProductData.image : '',
+          price: selectedProductData ? selectedProductData.price : '',
+          title: selectedProductData ? selectedProductData.title : '',
         }}
         validate={(values) => {
           const errors = {};
@@ -39,7 +40,7 @@ export const AddProductModal = ({ modalOpen, handleClose, submitForm }) => {
         {({ isSubmitting }) => (
           <Modal show={modalOpen} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Add a product</Modal.Title>
+              <Modal.Title>{selectedProductData ? 'Edit' : 'Add' } a product</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form>

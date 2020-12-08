@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import './dashboard.scss';
 import { AddProductModal } from '../../components/modals/add-product-modal/add-product-modal';
@@ -9,6 +10,7 @@ import { productAction } from '../../store/products/prodctsAction';
 import { history } from '../../route';
 
 class Dashboard extends Component {
+
   handleClose = () => {
     this.props.closeAddProductModal({
       type: 'PRODUCT_MODAL_CLOSE',
@@ -18,10 +20,6 @@ class Dashboard extends Component {
   submitForm = (val) => {
     this.props.addProduct(val);
   };
-
-  goToList = () => {
-    history.go('/list');
-  }
 
   render() {
     const { openAddProductModal, modalOpen } = this.props;
@@ -50,7 +48,11 @@ class Dashboard extends Component {
                       >
                         Add
                       </Button>
-                      <Button variant='primary' onClick={this.goToList}>List</Button>
+                      <Button variant='primary'>
+                        <Link to="/list">
+                          List
+                        </Link>
+                      </Button>
                     </div>
                   </div>
                 </Card.Body>
