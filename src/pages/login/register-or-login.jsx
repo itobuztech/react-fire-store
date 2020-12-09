@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export const RegisterOrLogin = ({ pathname }) => {
   if (pathname === '/login') {
     return (
-      <p>
+      <p className="login__submit-buttons">
         <Link to="/register">
           Register
         </Link>
@@ -11,7 +11,7 @@ export const RegisterOrLogin = ({ pathname }) => {
     )
   } else {
     return (
-      <p>
+      <p className="login__submit-buttons">
         <Link to="/login">
           Login
         </Link>

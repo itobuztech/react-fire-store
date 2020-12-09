@@ -18,8 +18,7 @@ function* workerLogin(action) {
       toast.success('Logged in successfully');
     }
   } catch (error) {
-    console.log(error);
-    return yield put(authAction.loginError(error));
+    toast.error(error.message);
   }
 }
 
@@ -31,7 +30,7 @@ function* workerRegister(action) {
     const response = yield call(authApi.signUp, action.payload);
     if (response) return yield put(authAction.registerSuccess(response));
   } catch (error) {
-    return yield put(authAction.registerError(error));
+    toast.error(error.message);
   }
 }
 

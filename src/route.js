@@ -22,7 +22,7 @@ const routes = (
     <AuthRoute path="/register" type="guest">
       <Login path="/register" />
     </AuthRoute>
-    <AuthRoute path="/home" type="private">
+    <AuthRoute path="/" type="private">
       <HomePage />
     </AuthRoute>
     <AuthRoute path="/cart" type="private">

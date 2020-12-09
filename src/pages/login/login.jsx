@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 
 import { authAction } from '../../store/auth/authAction';
-import { RegisterOrLogin } from '../../components/register-or-login';
+import { RegisterOrLogin } from './register-or-login';
 import './login.scss';
 
 class Login extends Component {
@@ -52,7 +52,7 @@ class Login extends Component {
                         ) : null}
                         <Row>
                           <Col className="form-group">
-                            <Field type='email' name='email' className="form-control" placeholder="Name"/>
+                            <Field type='email' name='email' className="form-control" placeholder="Email"/>
                             <ErrorMessage name='email' component='div' className="text-danger"  />
                           </Col>
                         </Row>

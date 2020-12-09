@@ -15,13 +15,6 @@ const authAction = {
     }
   },
 
-  registerError: (payload) => {
-    return {
-      type: AUTH.REGISTER_USER_ERROR,
-      payload
-    }
-  },
-
   loginRequest: (payload, props) => {
     return {
       type: AUTH.LOGIN_USER_REQUEST,
@@ -33,13 +26,6 @@ const authAction = {
   loginSuccess: (payload) => {
     return {
       type: AUTH.LOGIN_USER_SUCCESS,
-      payload
-    }
-  },
-
-  loginError: (payload) => {
-    return {
-      type: AUTH.LOGIN_USER_ERROR,
       payload
     }
   },

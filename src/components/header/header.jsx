@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 
-import { Navbar, NavDropdown, Nav, FormControl, Button, Form } from 'react-bootstrap';
+import {
+  Navbar,
+  NavDropdown,
+  Nav,
+  FormControl,
+  Button,
+  Form,
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -8,6 +15,7 @@ import { authAction } from '../../store/auth/authAction';
 import './header.scss';
 
 class Header extends Component {
+
   logOut = () => {
     return this.props.signOut(this.props);
   };
@@ -26,7 +34,7 @@ class Header extends Component {
             </Form>
           </div>
           <div>
-            <NavDropdown title={'Hi'} id='basic-nav-dropdown'>
+            <NavDropdown alignRight title={'Hi'} id='basic-nav-dropdown' className="header__dropdown">
               <p>
                 <Link to='/dashboard'>Dashboard</Link>
               </p>
