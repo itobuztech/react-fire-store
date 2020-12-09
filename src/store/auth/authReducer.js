@@ -14,7 +14,7 @@ const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTH.LOGIN_USER_SUCCESS: {
       localStorage.setItem("user", JSON.stringify(action.payload));
-      return { ...state, loggedInUser: action.payload };
+      return { ...state, loggedInUser: action.payload, isAuthUser: true };
     }
     case AUTH.LOGIN_USER_ERROR:
       return { ...state, loginError: action.payload };
@@ -24,7 +24,7 @@ const authReducer = (state = initialState, action) => {
         return { ...state, registerErr: action.payload };
     case AUTH.LOGOUT_USER_SUCCESS: {
       localStorage.removeItem("user");
-      return { ...state, signedOutSuccess: action.payload };
+      return { ...state, isAuthUser: null, loggedInUser: {} };
     }
     case AUTH.LOGOUT_USER_ERROR: {
       return { ...state, signedOutError: action.payload };

@@ -5,7 +5,7 @@ export const RegisterOrLogin = ({ pathname }) => {
     return (
       <p>
         <Link to="/register">
-          register
+          Register
         </Link>
       </p>
     )
@@ -13,7 +13,7 @@ export const RegisterOrLogin = ({ pathname }) => {
     return (
       <p>
         <Link to="/login">
-          login
+          Login
         </Link>
       </p>
     )

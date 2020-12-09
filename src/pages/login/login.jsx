@@ -20,7 +20,7 @@ class Login extends Component {
             <Col md={{ span: 6, offset: 3 }}>
               <Card>
                 <Card.Body>
-                  <h2 className="text-center">{path === '/register' ? 'Register' : 'Login'}</h2>
+                  <h3 className="text-center pb-4">{path === '/register' ? 'Register' : 'Login'}</h3>
                   <Formik
                     initialValues={{ name: '', email: '', password: '' }}
                     validate={(values) => {
@@ -46,25 +46,25 @@ class Login extends Component {
                         {path === '/register' ? (
                           <Row>
                             <Col className="form-group">
-                              <Field type='text' name='name' className="form-control" />
+                              <Field type='text' name='name' className="form-control" placeholder="Name" />
                             </Col>
                           </Row>
                         ) : null}
                         <Row>
                           <Col className="form-group">
-                            <Field type='email' name='email' className="form-control" />
-                            <ErrorMessage name='email' component='div' className="text-danger" />
+                            <Field type='email' name='email' className="form-control" placeholder="Name"/>
+                            <ErrorMessage name='email' component='div' className="text-danger"  />
                           </Col>
                         </Row>
                         <Row>
                           <Col className="form-group">
-                            <Field type='password' name='password' className="form-control" />
+                            <Field type='password' name='password' className="form-control" placeholder="Password"/>
                             <ErrorMessage name='password' component='div' className="text-danger" />
                           </Col>
                         </Row>
                         <Row>
                           <Col md={{ span: 4, offset: 4 }} className="text-center">
-                            <Button type='submit' disabled={isSubmitting}>
+                            <Button className="mb-2" type='submit' disabled={isSubmitting}>
                               {path === '/register'
                                 ? 'Register'
                                 : 'Submit'}

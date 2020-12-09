@@ -1,5 +1,5 @@
 import { takeLatest, call, put, fork, all } from "redux-saga/effects";
-
+import { push } from 'react-router-redux';
 import { toast } from 'react-toastify';
 
 import { authAction } from './authAction';
@@ -14,10 +14,11 @@ function* workerLogin(action) {
     const response = yield call(authApi.signIn, action.payload);
     if (response) {
       yield put(authAction.loginSuccess(response));
-      yield call(redirectTo, '/home');
+      yield put(push('/home'));
       toast.success('Logged in successfully');
     }
   } catch (error) {
+    console.log(error);
     return yield put(authAction.loginError(error));
   }
 }
@@ -41,7 +42,7 @@ function* wokerSignout(action) {
   try {
     const response = yield call([authApi, 'signOut']);
     yield put(authAction.signoutSuccess(response))
-    yield call(redirectTo, '/login');
+    yield put(push('/login'));
     toast.success('Loggedout successfully');
   } catch(error) {
     return yield put(authAction.signoutError(error));
