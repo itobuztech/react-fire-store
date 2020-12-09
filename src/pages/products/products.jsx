@@ -13,8 +13,9 @@ class Products extends Component {
     this.props.getProducts();
   }
 
-  buy = (id) => {
-    console.log({id});
+  buy = (product) => {
+    console.log({product});
+    this.props.addTocart(product);
   }
 
   render() {
@@ -27,7 +28,7 @@ class Products extends Component {
             { products.map((product, index) => {
               return (
                 <Col md={4} lg={4} key={index} className="mt-4">
-                  <Product product={product} buy={true} addToCartClicked={(event) => this.buy(event)}></Product>
+                  <Product product={product} buy={true} addToCartClicked={(product) => this.buy(product)}></Product>
                 </Col>
               );
             })}

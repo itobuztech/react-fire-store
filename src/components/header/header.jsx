@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
+import { Navbar, NavDropdown, Nav, FormControl, Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { authAction } from '../../store/auth/authAction';
+import './header.scss';
 
 class Header extends Component {
   logOut = () => {
@@ -12,17 +13,26 @@ class Header extends Component {
   };
 
   render() {
+    const { searchClicked } = this.props;
     return (
       <Navbar bg='light' expand='lg'>
         <Navbar.Brand href='#home'>React-fire-cart</Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav' className='justify-content-end'>
-          <NavDropdown title={'Hi'} id='basic-nav-dropdown'>
-            <p>
-              <Link to='/dashboard'>Dashboard</Link>
-            </p>
-            <p onClick={() => this.logOut()}>Sign out</p>
-          </NavDropdown>
+          <div className="header__search">
+            <Form inline>
+              <FormControl type="text" placeholder="Search products" className="mr-sm-2" onChange={(event) => searchClicked(event)} />
+              <Button variant="outline-success" onClick={searchClicked}>Search</Button>
+            </Form>
+          </div>
+          <div>
+            <NavDropdown title={'Hi'} id='basic-nav-dropdown'>
+              <p>
+                <Link to='/dashboard'>Dashboard</Link>
+              </p>
+              <p onClick={() => this.logOut()}>Sign out</p>
+            </NavDropdown>
+          </div>
         </Navbar.Collapse>
       </Navbar>
     );

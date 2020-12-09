@@ -7,6 +7,10 @@ import { cartAction } from '../../store/cart/cartAction';
 import './cart.scss';
 
 class Cart extends Component {
+
+  // componentDidMount() {
+  //   this.props.
+  // }
   render() {
     const { cart } = this.props;
     return (
