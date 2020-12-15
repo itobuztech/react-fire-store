@@ -2,12 +2,25 @@ import React, { Component } from 'react';
 
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-
 import { Typeahead } from 'react-bootstrap-typeahead';
+import { toast } from 'react-toastify';
+
+import { storage } from '../../../services/firebase';
 
 class AddProductModal extends Component {
   state = {
     category: null,
+  };
+
+  getUploadedImageUrl = (file) => {
+    const storageRef = storage.ref();
+    const fileRef = storageRef.child(file.name);
+    return fileRef
+      .put(file)
+      .then(() => {
+        return fileRef.getDownloadURL()
+      })
+      .catch((err) => toast.error(err.message));
   };
 
   render() {
@@ -51,10 +64,14 @@ class AddProductModal extends Component {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            const category = values.category.category ? values.category.category : values.category;
-            const payload = { ...values, category };
-            submitForm(payload);
-            setSubmitting(false);
+            const category = values.category.category
+              ? values.category.category
+              : values.category;
+            this.getUploadedImageUrl(values.image).then((url) => {
+              const payload = { ...values, category, image: url };
+              submitForm(payload);
+              setSubmitting(false);
+            });
           }}
         >
           {({ isSubmitting, setFieldValue }) => (
@@ -83,12 +100,21 @@ class AddProductModal extends Component {
                   </Row>
                   <Row>
                     <Col className='form-group'>
-                      <Field
-                        type='text'
-                        name='image'
-                        placeholder='Image url'
-                        className='form-control'
-                      />
+                      <Field name='image'>
+                        {({ field }) => (
+                          <input
+                            accept='image/*'
+                            name='image'
+                            type='file'
+                            onChange={(event) =>
+                              setFieldValue(
+                                'image',
+                                event.currentTarget.files[0]
+                              )
+                            }
+                          />
+                        )}
+                      </Field>
                       <ErrorMessage
                         name='image'
                         component='div'
@@ -98,7 +124,7 @@ class AddProductModal extends Component {
                   </Row>
                   <Row>
                     <Col className='form-group'>
-                      <Field name='category' component="select">
+                      <Field name='category' component='select'>
                         {({ field }) => (
                           <Typeahead
                             className='add-product__category-select'
@@ -106,8 +132,8 @@ class AddProductModal extends Component {
                             clearButton
                             defaultSelected={
                               selectedProductData
-                              ? [selectedProductData.category]
-                              : ''
+                                ? [selectedProductData.category]
+                                : ''
                             }
                             id='custom-selections-example'
                             labelKey='category'
@@ -120,6 +146,11 @@ class AddProductModal extends Component {
                           />
                         )}
                       </Field>
+                      <ErrorMessage
+                        name='category'
+                        component='div'
+                        className='text-danger'
+                      />
                     </Col>
                   </Row>
                   <Row>

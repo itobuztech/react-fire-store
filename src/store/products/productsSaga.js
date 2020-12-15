@@ -31,6 +31,7 @@ function* workerAddProduct(action) {
     }
   } catch(error) {
     yield put(productAction.addProductError(error));
+    toast.error(error.message);
   }
 }
 
