@@ -5,7 +5,7 @@ const initialState = {
   loggedInUser: JSON.parse(localStorage.getItem("user")) || {},
   registerErr: null,
   registeredUser: null,
-  isAuthUser: false,
+  isAuthUser: !!localStorage.getItem("user"),
   signedOutSuccess: null,
   signedOutError: null,
 };
