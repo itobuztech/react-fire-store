@@ -4,6 +4,7 @@ const initialState = {
   cart: [],
   addToCartSuccess: null,
   addToCartError: null,
+  quantityError: null
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -32,6 +33,21 @@ const cartReducer = (state = initialState, action) => {
     }
     case CART.EDIT_CART_ERROR:
       return { ...state, addToCartError: action.payload };
+    case CART.CHANGE_QUANTITY_SUCCESS: {
+      const product = action.payload.product;
+      const type = action.payload.type;
+      const cart = state.cart.map(item => {
+        return {
+          ...item,
+          quantity: item.id === product.id
+          ? (type === 'inc' ? product.quantity + 1 : product.quantity - 1)
+          : item.quantity
+        };
+      })
+      return { ...state, cart };
+    }
+    case CART.CHANGE_QUANTITY_ERROR:
+      return { ...state, quantityError: action.payload };
     case CART.DELETE_CART_SUCCESS: {
       let updatedCart = state.cart.filter(item => item.id !== action.id);
       return { ...state, cart: updatedCart };

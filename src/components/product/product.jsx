@@ -19,7 +19,7 @@ class Product extends Component {
           {
             buy ?
             (
-              <Button variant="primary" onClick={() => addToCartClicked(product.id)}>
+              <Button variant="primary" onClick={() => addToCartClicked(product)}>
                 Add to Cart
               </Button>
             ): null

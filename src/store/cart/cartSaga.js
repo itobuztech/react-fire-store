@@ -48,6 +48,21 @@ function* workerEditCart(action) {
   }
 }
 
+function* watchEditQuantity() {
+  yield takeLatest("CHANGE_QUANTITY_REQUEST", workerEditQuantity);
+}
+
+function* workerEditQuantity(action) {
+  try {
+    yield call(cartsApi.updateQuantity, action.payload.product);
+    yield put(cartAction.changeQuantitySuccess(action.payload));
+    toast.success('Quantity updated successfully');
+  } catch(error) {
+    yield put(cartAction.changeQuantityError(error));
+    toast.error(error.message);
+  }
+}
+
 function* watcherDeleteCart() {
   yield takeLatest("DELETE_CART_REQUEST", workerDeleteCart);
 }
@@ -62,11 +77,12 @@ function* workerDeleteCart(action) {
   }
 }
 
-export default function* productsSaga() {
+export default function* cartSaga() {
   yield all([
     fork(watcherGetCart),
     fork(watcherAddCart),
     fork(watcherEditCart),
+    fork(watchEditQuantity),
     fork(watcherDeleteCart)
   ])
 };

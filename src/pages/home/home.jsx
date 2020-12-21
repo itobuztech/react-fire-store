@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-
 import Header from '../../components/header/header';
 import Products from '../products/products';
 
@@ -14,7 +12,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Header searchClicked={this.productSearch}></Header>
+        <Header searchBox={true}></Header>
         <Products></Products>
       </div>
     );

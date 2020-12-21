@@ -21,6 +21,10 @@ const productAction = {
 
     selectedProduct: (payload) => ({ type: PRODUCTS.SELECTED_PRODUCT, payload }),
 
+    filterProduct: (payload) => ({ type: PRODUCTS.FILTER_PRODUCT, payload }),
+
+    removeFilterFromProducts: () => ({ type: PRODUCTS.REMOVE_FILTER }),
+
     deleteProductRequest: (id) => ({ type: PRODUCTS.DELETE_PRODUCT_REQUEST, id }),
 
     deleteProductSuccess: (id) => ({ type: PRODUCTS.DELETE_PRODUCT_SUCCESS, id }),

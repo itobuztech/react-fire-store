@@ -2,6 +2,7 @@ import { PRODUCTS } from './productsConstant';
 
 const initialState = {
   products: [],
+  productsWithoutFilter: [],
   productsError: null,
   addProductErr: null,
   productsSuccess: null,
@@ -11,17 +12,25 @@ const initialState = {
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case PRODUCTS.GET_PRODUCTS_SUCCESS:
-      return { ...state, products: action.payload };
+    case PRODUCTS.GET_PRODUCTS_SUCCESS: {
+      return { ...state, products: action.payload, productsWithoutFilter: action.payload };
+    }
     case PRODUCTS.GET_PRODUCTS_ERROR:
       return { ...state, productsError: action.payload };
     case PRODUCTS.ADD_PRODUCT_SUCCESS: {
-      return { ...state, products: [ ...state.products, action.payload], modalOpen: false };
+      return { ...state, products: [ ...state.products, action.payload ], modalOpen: false };
     }
     case PRODUCTS.ADD_PRODUCT_ERROR:
       return { ...state, productsError: action.payload };
     case PRODUCTS.SELECTED_PRODUCT:
       return { ...state, selectedProductFormData: action.payload };
+    case PRODUCTS.FILTER_PRODUCT: {
+      const products = state.products.filter(prod => action.payload === prod.title);
+      return { ...state, products };
+    }
+    case PRODUCTS.REMOVE_FILTER: {
+      return { ...state, products: state.productsWithoutFilter };
+    }
     case PRODUCTS.EDIT_PRODUCT_SUCCESS: {
       const products = state.products.map((prod) => {
         if (prod.id === action.docId) {

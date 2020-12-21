@@ -19,6 +19,11 @@ const cartsApi = {
         })
     },
 
+    updateQuantity: async(product) => {
+      return await firestore.collection('cart').doc(product.id)
+        .update({quantity: product.quantity})
+    },
+
     deleteProductFromCart: async(id) => {
       return await firestore.collection('cart').doc(id).delete();
     }

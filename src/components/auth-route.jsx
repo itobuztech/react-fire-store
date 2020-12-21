@@ -11,7 +11,6 @@ const AuthRoute = props => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     isAuthUser: state.authReducer.isAuthUser
   };

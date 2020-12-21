@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 import { productAction } from '../../store/products/prodctsAction';
 import { cartAction } from '../../store/cart/cartAction';
@@ -11,11 +12,13 @@ import './products.scss';
 class Products extends Component {
   componentDidMount() {
     this.props.getProducts();
+    this.props.getCart();
   }
 
   buy = (product) => {
-    console.log({product});
-    this.props.addTocart(product);
+    this.props.cart.filter(item => item.title === product.title).length > 0
+    ? toast.error('Product is already added to cart')
+    : this.props.addTocart({...product, quantity: 1});
   }
 
   render() {
@@ -43,14 +46,16 @@ const mapStateToProps = (state) => {
   return {
     products: state.productsReducer.products,
     productsError: state.productsReducer.productsError,
-    productsSuccess: state.productsReducer.productsSuccess
+    productsSuccess: state.productsReducer.productsSuccess,
+    cart: state.cartReducer.cart
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: () => dispatch(productAction.getProductRequest()),
-    addTocart: (payload) => dispatch(cartAction.addToCart(payload))
+    addTocart: (payload) => dispatch(cartAction.addToCart(payload)),
+    getCart: () => dispatch(cartAction.getCart())
   };
 };
 

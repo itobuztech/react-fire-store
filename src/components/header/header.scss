@@ -3,6 +3,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
+
+    form {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+    }
   }
 
   &__dropdown {
@@ -25,5 +31,30 @@
         text-decoration: none;
       }
     }
+  }
+  &__clear-search {
+    cursor: pointer;
+  }
+  &__submit-btn {
+    margin-left: 10px;
+  }
+
+  &__cart {
+    a {
+      display: flex;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__cart-icon {
+    font-size: 25px;
+  }
+
+  &__cart-item {
+    vertical-align: sub;
+    font-size: 15px;
   }
 }

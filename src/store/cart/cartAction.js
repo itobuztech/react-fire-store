@@ -1,7 +1,7 @@
 import { CART } from './cartConstants';
 
 const cartAction = {
-  getCart: (payload) => ({ type: CART.GET_CART_REQUEST, payload }),
+  getCart: () => ({ type: CART.GET_CART_REQUEST }),
   getCartSuccess: (payload) => ({ type: CART.GET_CART_SUCCESS, payload }),
   getCartError: (payload) => ({ type: CART.GET_CART_ERROR, payload }),
 
@@ -12,6 +12,10 @@ const cartAction = {
   editCart: (payload, docId) => ({ type: CART.EDIT_CART_REQUEST, payload, docId }),
   editCartSuccess: (payload, docId) => ({ type: CART.EDIT_CART_SUCCESS, payload, docId }),
   editCartError: (payload) => ({ type: CART.EDIT_CART_ERROR, payload }),
+
+  changeQuantity: (payload) => ({ type: CART.CHANGE_QUANTITY_REQUEST, payload }),
+  changeQuantitySuccess: (payload) => ({ type: CART.CHANGE_QUANTITY_SUCCESS, payload }),
+  changeQuantityError: (payload) => ({ type: CART.CHANGE_QUANTITY_ERROR, payload }),
 
   deleteCartRequest: (id) => ({ type: CART.DELETE_CART_REQUEST, id }),
   deleteCartSuccess: (id) => ({ type: CART.DELETE_CART_SUCCESS, id }),
