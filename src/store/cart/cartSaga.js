@@ -54,7 +54,10 @@ function* watchEditQuantity() {
 
 function* workerEditQuantity(action) {
   try {
-    yield call(cartsApi.updateQuantity, action.payload.product);
+    yield call(cartsApi.updateQuantity, {
+      ...action.payload.product,
+      quantity: action.payload.type === 'inc' ? action.payload.product.quantity + 1 : action.payload.product.quantity - 1
+    });
     yield put(cartAction.changeQuantitySuccess(action.payload));
     toast.success('Quantity updated successfully');
   } catch(error) {
@@ -64,16 +67,16 @@ function* workerEditQuantity(action) {
 }
 
 function* watcherDeleteCart() {
-  yield takeLatest("DELETE_CART_REQUEST", workerDeleteCart);
+  yield takeLatest("DELETE_FROM_CART_REQUEST", workerDeleteCart);
 }
 
 function* workerDeleteCart(action) {
   try {
     yield call(cartsApi.deleteProductFromCart, action.id);
-    yield put(cartAction.deleteCartSuccess(action.id));
-    toast.success('Cart deleted successfully');
+    yield put(cartAction.deleteFromCartSuccess(action.id));
+    toast.success('Product deleted successfully');
   } catch(error) {
-    yield put(cartAction.deleteCartError(error));
+    toast.error(error.message);
   }
 }
 

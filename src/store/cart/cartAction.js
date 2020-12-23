@@ -17,9 +17,8 @@ const cartAction = {
   changeQuantitySuccess: (payload) => ({ type: CART.CHANGE_QUANTITY_SUCCESS, payload }),
   changeQuantityError: (payload) => ({ type: CART.CHANGE_QUANTITY_ERROR, payload }),
 
-  deleteCartRequest: (id) => ({ type: CART.DELETE_CART_REQUEST, id }),
-  deleteCartSuccess: (id) => ({ type: CART.DELETE_CART_SUCCESS, id }),
-  deleteCartError: (payload) => ({ type: CART.DELETE_CART_ERROR, payload }),
+  deleteFromCart: (id) => ({ type: CART.DELETE_FROM_CART_REQUEST, id }),
+  deleteFromCartSuccess: (id) => ({ type: CART.DELETE_FROM_CART_SUCCESS, id })
 };
 
 export { cartAction };

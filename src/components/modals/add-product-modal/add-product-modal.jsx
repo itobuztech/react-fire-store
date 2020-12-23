@@ -86,7 +86,7 @@ class AddProductModal extends Component {
                   <Row>
                     <Col className='form-group'>
                       <Field
-                        type='title'
+                        type='text'
                         name='title'
                         placeholder='Title'
                         className='form-control'
@@ -171,7 +171,7 @@ class AddProductModal extends Component {
                   <Row>
                     <Col className='form-group'>
                       <Field
-                        type='price'
+                        type='number'
                         name='price'
                         placeholder='Price'
                         className='form-control'
