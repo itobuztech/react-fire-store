@@ -6,11 +6,10 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import { loadStripe } from '@stripe/stripe-js';
 
 import { cartAction } from '../../store/cart/cartAction';
-// import * as
 import './cart.scss';
 
-const stripePromise = loadStripe('pk_test_p5TXTelJGPHS1LUL0p4nOR4u00BZCvfRqH');
-// pk_test_p5TXTelJGPHS1LUL0p4nOR4u00BZCvfRqH
+const stripePromise = loadStripe("pk_test_p5TXTelJGPHS1LUL0p4nOR4u00BZCvfRqHpk_test_51I1oJsKm7cLBUuXQuUdBYKYIPnIqvEtPIWixGqnu3O3ZT54ogiMuh08VqB7tSDTobOMzPIvZkFaoDSLzvMXwEhCH00Mxdtswkh");
+
 class Cart extends Component {
 
   state = {
@@ -104,6 +103,7 @@ class Cart extends Component {
           <Button
             variant='primary'
             role="link"
+            onClick={handleClick}
           >
             Checkout
           </Button>
@@ -128,3 +128,24 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+
+const handleClick = async (event) => {
+  // Get Stripe.js instance
+  const stripe = await stripePromise;
+
+  // Call your backend to create the Checkout Session
+  const response = await fetch('http://localhost:4242/secret', { method: 'POST' });
+
+  const session = await response.json();
+
+  // When the customer clicks on the button, redirect them to Checkout.
+  const result = await stripe.redirectToCheckout({
+    sessionId: session.id,
+  });
+
+  if (result.error) {
+    // If `redirectToCheckout` fails due to a browser or network
+    // error, display the localized error message to your customer
+    // using `result.error.message`.
+  }
+};

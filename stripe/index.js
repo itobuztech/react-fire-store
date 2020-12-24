@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/secret', async (req, res) => {
+app.post('/secret', async (req, res) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: 1099,
     currency: 'inr',
