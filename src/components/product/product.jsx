@@ -9,9 +9,11 @@ class Product extends Component {
   render() {
     const { product, buy, edit, addToCartClicked, editClicked, deleteClicked } = this.props;
     return (
-      <Card>
-        <Card.Img variant="top" src={product.image} />
-        <Card.Body>
+      <Card className="align-items-stretch justify-content-between">
+        <div>
+          <Card.Img variant="top" src={product.image} />
+        </div>
+        <Card.Body className="product__detail">
           <Card.Title>{product.title}</Card.Title>
           <Card.Text>
             {product.description}

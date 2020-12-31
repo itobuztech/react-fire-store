@@ -6,26 +6,28 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import { loadStripe } from '@stripe/stripe-js';
 
 import { cartAction } from '../../store/cart/cartAction';
+import Header from '../../components/header/header';
 import './cart.scss';
 
-const stripePromise = loadStripe("pk_test_p5TXTelJGPHS1LUL0p4nOR4u00BZCvfRqHpk_test_51I1oJsKm7cLBUuXQuUdBYKYIPnIqvEtPIWixGqnu3O3ZT54ogiMuh08VqB7tSDTobOMzPIvZkFaoDSLzvMXwEhCH00Mxdtswkh");
+const stripePromise = loadStripe(
+  'pk_test_p5TXTelJGPHS1LUL0p4nOR4u00BZCvfRqHpk_test_51I1oJsKm7cLBUuXQuUdBYKYIPnIqvEtPIWixGqnu3O3ZT54ogiMuh08VqB7tSDTobOMzPIvZkFaoDSLzvMXwEhCH00Mxdtswkh'
+);
 
 class Cart extends Component {
-
   state = {
-    total: 0
+    total: 0,
   };
 
   componentDidMount() {
     this.props.getCart();
     this.calculateTotal();
-  };
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.cart !== prevProps.cart) {
       this.calculateTotal();
     }
-  };
+  }
 
   changeQuantity = (type, product) => {
     this.props.changeQuantity({ type, product });
@@ -34,88 +36,90 @@ class Cart extends Component {
 
   calculateTotal = () => {
     const cartData = this.props.cart;
-    const price = cartData.map(el => el.price*el.quantity);
+    const price = cartData.map((el) => el.price * el.quantity);
     const total = price.reduce((ac, cr) => ac + cr, 0);
-    this.setState({total});
+    this.setState({ total });
   };
 
   render() {
     const { cart, deleteFromCart } = this.props;
     return (
-      <Container>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Items</th>
-              <th>Quantity</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {cart.map((product, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <img
-                      src={product.image}
-                      className='img-fluid cart--product-image'
-                      alt='product image'
-                    />
-                  </td>
-                  <td>
-                    <div className='d-flex justify-content-between align-items-center'>
+      <div>
+        <Header></Header>
+        <Container>
+          <Table striped bordered hover className="mt-5">
+            <thead>
+              <tr>
+                <th>Items</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((product, index) => {
+                return (
+                  <tr key={index}>
+                    <td>
+                      <img
+                        src={product.image}
+                        className='img-fluid cart--product-image'
+                        alt='product image'
+                      />
+                      <p>{product.title}</p>
+                    </td>
+                    <td>{product.price}</td>
+                    <td>
+                      <div className='d-flex justify-content-between align-items-center'>
+                        <Button
+                          onClick={() => this.changeQuantity('inc', product)}
+                        >
+                          <FaPlus />
+                        </Button>
+                        {product.quantity}
+                        <Button
+                          disabled={product.quantity <= 0}
+                          onClick={() => this.changeQuantity('dec', product)}
+                        >
+                          <FaMinus />
+                        </Button>
+                      </div>
+                    </td>
+                    <td>
                       <Button
-                        onClick={() => this.changeQuantity('inc', product)}
+                        variant='danger'
+                        onClick={() => deleteFromCart(product.id)}
                       >
-                        <FaPlus />
+                        Delete
                       </Button>
-                      {product.quantity}
-                      <Button
-                        disabled={product.quantity <= 0}
-                        onClick={() => this.changeQuantity('dec', product)}
-                      >
-                        <FaMinus />
-                      </Button>
-                    </div>
-                  </td>
-                  <td>
-                    <Button
-                      variant='danger'
-                      onClick={() => deleteFromCart(product.id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-        <div className="cart__total">
-          <div>
-            <h5>Total:</h5>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+          <div className='cart__total'>
+            <div>
+              <h5>Total:</h5>
+            </div>
+            <div>
+              <h5>{this.state.total}</h5>
+            </div>
           </div>
-          <div>
-            <h5>{ this.state.total }</h5>
+          <div className='mt-3 text-right'>
+            <Button variant='primary' role='link' onClick={handleClick}>
+              Checkout
+            </Button>
           </div>
-        </div>
-        <div className="mt-3 text-right">
-          <Button
-            variant='primary'
-            role="link"
-            onClick={handleClick}
-          >
-            Checkout
-          </Button>
-        </div>
-      </Container>
+        </Container>
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 
@@ -123,7 +127,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getCart: () => dispatch(cartAction.getCart()),
     changeQuantity: (payload) => dispatch(cartAction.changeQuantity(payload)),
-    deleteFromCart: (id) => dispatch(cartAction.deleteFromCart(id))
+    deleteFromCart: (id) => dispatch(cartAction.deleteFromCart(id)),
   };
 };
 
@@ -134,7 +138,9 @@ const handleClick = async (event) => {
   const stripe = await stripePromise;
 
   // Call your backend to create the Checkout Session
-  const response = await fetch('http://localhost:4242/secret', { method: 'POST' });
+  const response = await fetch('http://localhost:4242/secret', {
+    method: 'POST',
+  });
 
   const session = await response.json();
 

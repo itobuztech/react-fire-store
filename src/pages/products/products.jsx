@@ -30,7 +30,7 @@ class Products extends Component {
           <Row>
             { products.map((product, index) => {
               return (
-                <Col md={4} lg={4} key={index} className="mt-4">
+                <Col md={4} lg={4} key={index} className="mt-4 d-flex">
                   <Product product={product} buy={true} addToCartClicked={(product) => this.buy(product)}></Product>
                 </Col>
               );
