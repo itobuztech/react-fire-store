@@ -49,6 +49,21 @@ function* workerEditProduct(action) {
   }
 }
 
+function* watcherSearchProduct() {
+  yield takeLatest("SEARCH_PRODUCT_REQUEST", workerSearchProduct);
+}
+
+function* workerSearchProduct(action) {
+  try {
+    const response = yield call(productsApi.searchProduct, action.payload);
+    if (response) {
+      yield put(productAction.searchProdByKeywordSuccess(response));
+    }
+  } catch(error) {
+    toast.error(error.message);
+  }
+}
+
 function* watcherDeleteProduct() {
   yield takeLatest("DELETE_PRODUCT_REQUEST", workerDeleteProduct);
 }
@@ -68,6 +83,7 @@ export default function* productsSaga() {
     fork(watcherGetProduct),
     fork(watcherAddProduct),
     fork(watcherEditProduct),
+    fork(watcherSearchProduct),
     fork(watcherDeleteProduct)
   ])
 };

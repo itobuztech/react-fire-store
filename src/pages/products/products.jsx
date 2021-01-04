@@ -16,25 +16,30 @@ class Products extends Component {
   }
 
   buy = (product) => {
-    this.props.cart.filter(item => item.title === product.title).length > 0
-    ? toast.error('Product is already added to cart')
-    : this.props.addTocart({...product, quantity: 1});
-  }
+    this.props.cart.filter((item) => item.title === product.title).length > 0
+      ? toast.error('Product is already added to cart')
+      : this.props.addTocart({ ...product, quantity: 1 });
+  };
 
   render() {
     const { products } = this.props;
-
     return (
       <div className='products__wrapper'>
         <Container>
           <Row>
-            { products.map((product, index) => {
-              return (
-                <Col md={4} lg={4} key={index} className="mt-4 d-flex">
-                  <Product product={product} buy={true} addToCartClicked={(product) => this.buy(product)}></Product>
-                </Col>
-              );
-            })}
+            {products.length > 0
+              ? products.map((product, index) => {
+                  return (
+                    <Col md={4} lg={4} key={index} className='mt-4 d-flex'>
+                      <Product
+                        product={product}
+                        buy={true}
+                        addToCartClicked={(product) => this.buy(product)}
+                      ></Product>
+                    </Col>
+                  );
+                })
+              : null}
           </Row>
         </Container>
       </div>
@@ -47,7 +52,7 @@ const mapStateToProps = (state) => {
     products: state.productsReducer.products,
     productsError: state.productsReducer.productsError,
     productsSuccess: state.productsReducer.productsSuccess,
-    cart: state.cartReducer.cart
+    cart: state.cartReducer.cart,
   };
 };
 
@@ -55,7 +60,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: () => dispatch(productAction.getProductRequest()),
     addTocart: (payload) => dispatch(cartAction.addToCart(payload)),
-    getCart: () => dispatch(cartAction.getCart())
+    getCart: () => dispatch(cartAction.getCart()),
   };
 };
 

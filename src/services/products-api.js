@@ -19,6 +19,16 @@ const productsApi = {
         })
     },
 
+    searchProduct: async(searchKey) => {
+      console.log({searchKey});
+      const snapshot = await firestore.collection('products')
+        .where('title', '>=', searchKey)
+        .where('title', '<=', searchKey+'\uf8ff')
+        .limit(10)
+        .get();
+      return snapshot.docs.map(doc => utilities.convertSnapShot(doc));
+    },
+
     deleteProduct: async(id) => {
       return await firestore.collection('products').doc(id).delete();
     }

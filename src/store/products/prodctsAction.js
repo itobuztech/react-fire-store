@@ -25,6 +25,10 @@ const productAction = {
 
     removeFilterFromProducts: () => ({ type: PRODUCTS.REMOVE_FILTER }),
 
+    searchProductByKeyword: (payload) => ({ type: PRODUCTS.SEARCH_PRODUCT_REQUEST, payload }),
+
+    searchProdByKeywordSuccess: (payload) => ({ type: PRODUCTS.SEARCH_PRODUCT_SUCCESS, payload }),
+
     deleteProductRequest: (id) => ({ type: PRODUCTS.DELETE_PRODUCT_REQUEST, id }),
 
     deleteProductSuccess: (id) => ({ type: PRODUCTS.DELETE_PRODUCT_SUCCESS, id }),
