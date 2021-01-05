@@ -1,4 +1,4 @@
-import { takeLatest, call, put, fork, all, dispatch } from 'redux-saga/effects';
+import { takeLatest, call, put, fork, all } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
 
@@ -24,7 +24,7 @@ function* watcherAddCart() {
 }
 
 function* workerAddCart(action) {
-  
+
   try {
     const response = yield call(cartsApi.addToCart, action.payload);
     if (response) {
