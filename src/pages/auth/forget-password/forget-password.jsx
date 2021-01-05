@@ -3,16 +3,14 @@ import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-import { authAction } from '../../store/auth/authAction';
-import { RegisterOrLogin } from './register-or-login';
-import './login.scss';
+import { authAction } from '../../../store/auth/authAction';
+import './forget-password.scss';
 
-class Login extends Component {
+class Forget extends Component {
 
   render() {
-    const { path } = this.props;
-
     return (
       <div className='login__wrapper'>
         <Container>
@@ -20,9 +18,9 @@ class Login extends Component {
             <Col md={{ span: 6, offset: 3 }}>
               <Card>
                 <Card.Body>
-                  <h3 className="text-center pb-4">{path === '/register' ? 'Register' : 'Login'}</h3>
+                  <h3 className="text-center pb-4">Forget Password</h3>
                   <Formik
-                    initialValues={{ name: '', email: '', password: '' }}
+                    initialValues={{ email: '' }}
                     validate={(values) => {
                       const errors = {};
                       if (!values.email) {
@@ -43,13 +41,6 @@ class Login extends Component {
                   >
                     {({ isSubmitting }) => (
                       <Form>
-                        {path === '/register' ? (
-                          <Row>
-                            <Col className="form-group">
-                              <Field type='text' name='name' className="form-control" placeholder="Name" />
-                            </Col>
-                          </Row>
-                        ) : null}
                         <Row>
                           <Col className="form-group">
                             <Field type='email' name='email' className="form-control" placeholder="Email"/>
@@ -57,21 +48,17 @@ class Login extends Component {
                           </Col>
                         </Row>
                         <Row>
-                          <Col className="form-group">
-                            <Field type='password' name='password' className="form-control" placeholder="Password"/>
-                            <ErrorMessage name='password' component='div' className="text-danger" />
-                          </Col>
-                        </Row>
-                        <Row>
                           <Col md={{ span: 4, offset: 4 }} className="text-center">
                             <Button className="mb-2" type='submit' disabled={isSubmitting}>
-                              {path === '/register'
-                                ? 'Register'
-                                : 'Submit'}
+                              Submit
                             </Button>
-                            <RegisterOrLogin
-                              pathname={path}
-                            ></RegisterOrLogin>
+                          </Col>
+                          <Col md={{ span: 4, offset: 4 }} className="text-center">
+                            <Button className="mb-2 forget-password__login">
+                              <Link to='/login'>
+                                Login
+                              </Link>
+                            </Button>
                           </Col>
                         </Row>
                       </Form>
@@ -87,29 +74,20 @@ class Login extends Component {
   }
 
   submitForm(payload) {
-    if (this.props.path === '/register') {
-      this.props.register(payload);
-    } else {
-      this.props.login(payload);
-    }
+    this.props.forgetPassword(payload);
   }
 
 }
 
 const mapStateToProps = (state) => {
   return {
-    loginError: state.authReducer.loginError,
-    registerErr: state.authReducer.registerErr,
-    loggedInUser: state.authReducer.loggedInUser,
-    registeredUser: state.authReducer.registeredUser
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    register: (payload) => dispatch(authAction.registerRequest(payload)),
-    login: (payload) => dispatch(authAction.loginRequest(payload)),
+    forgetPassword: (payload) => dispatch(authAction.forgetPasswordRequest(payload))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Forget);

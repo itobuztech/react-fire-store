@@ -16,7 +16,12 @@ const authApi = {
 
   signOut: () => {
     return auth.signOut()
+  },
+
+  forgetPassword: async (emailId) => {
+    return await auth.sendPasswordResetEmail(emailId);
   }
+
 };
 
 export { authApi };

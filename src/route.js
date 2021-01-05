@@ -2,7 +2,8 @@ import React, { Suspense } from "react";
 
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import Login from "./pages/login/login.jsx";
+import Login from "./pages/auth/login/login.jsx";
+import Forget from "./pages/auth/forget-password/forget-password.jsx";
 import Notfound from "./pages/notfound/notfound.jsx";
 import Cart from "./pages/cart/cart.jsx";
 import Dashboard from "./pages/dashboard/dashboard.jsx";
@@ -14,6 +15,9 @@ const routes = (
   <Switch>
     <AuthRoute path="/login" type="guest">
       <Login path="/login" />
+    </AuthRoute>
+    <AuthRoute path="/forget-password" type="guest">
+      <Forget />
     </AuthRoute>
     <AuthRoute path="/register" type="guest">
       <Login path="/register" />

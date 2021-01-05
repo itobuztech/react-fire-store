@@ -1,4 +1,5 @@
 import { AUTH } from './authConstants';
+import { auth } from '../../services/firebase';
 
 const authAction = {
   registerRequest: (payload) => {
@@ -46,6 +47,13 @@ const authAction = {
   signoutError: (payload) => {
     return {
       type: AUTH.LOGOUT_USER_ERROR,
+      payload
+    }
+  },
+
+  forgetPasswordRequest: (payload) => {
+    return {
+      type: AUTH.FORGET_PASSWORD_REQUEST,
       payload
     }
   }

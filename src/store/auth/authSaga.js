@@ -48,10 +48,23 @@ function* wokerSignout(action) {
   }
 }
 
+function* watcherForgetPassword() {
+  yield takeLatest("FORGET_PASSWORD_REQUEST", workerForgetPassword);
+}
+function* workerForgetPassword(action) {
+  try {
+    yield call(authApi.forgetPassword, action.payload.email);
+    toast.success('Check your email to reset password');
+  } catch(err) {
+    toast.error(err.message);
+  }
+}
+
 export default function* authSaga() {
   yield all([
     fork(watcherLogin),
     fork(watcherRegister),
-    fork(watcherSignout)
+    fork(watcherSignout),
+    fork(watcherForgetPassword)
   ]);
 };
