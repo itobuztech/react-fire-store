@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 
 import { productAction } from './prodctsAction';
 import { productsApi } from '../../services/products-api';
+import { cartsApi } from '../../services/cart-api';
 
 function* watcherGetProduct() {
   yield takeLatest("GET_PRODUCTS_REQUEST", workerGetProduct);
@@ -11,8 +12,15 @@ function* watcherGetProduct() {
 
 function* workerGetProduct() {
   try {
-    const response = yield call(productsApi.getProducts);
-    if (response) yield put(productAction.getProductSuccess(response));
+    const productResponse = yield call(productsApi.getProducts);
+    const cartResponse = yield call(cartsApi.getCart);
+    const products = productResponse.map(product => {
+      return {
+        isInCart: cartResponse.find(item => item.productId === product.id) ? true : false,
+        ...product
+      }
+    })
+    if (products) yield put(productAction.getProductSuccess(products));
   } catch(error) {
     yield put(productAction.getProductError(error));
   }

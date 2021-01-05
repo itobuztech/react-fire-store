@@ -9,7 +9,12 @@ const cartsApi = {
     },
 
     addToCart: async(payload) => {
-      return await firestore.collection('cart').add(payload);
+      const data = {
+        ...payload,
+        productId: payload.id
+      }
+      console.log(data);
+      return await firestore.collection('cart').add(data);
     },
 
     editProductInCart: async(payload, docId) => {

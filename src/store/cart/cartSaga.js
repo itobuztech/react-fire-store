@@ -1,9 +1,10 @@
-import { takeLatest, call, put, fork, all } from 'redux-saga/effects';
+import { takeLatest, call, put, fork, all, dispatch } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
 
 import { cartAction } from './cartAction';
 import { cartsApi } from '../../services/cart-api';
+import { PRODUCTS } from '../products/productsConstant';
 
 function* watcherGetCart() {
   yield takeLatest("GET_CART_REQUEST", workerGetCart);
@@ -23,10 +24,12 @@ function* watcherAddCart() {
 }
 
 function* workerAddCart(action) {
+  
   try {
     const response = yield call(cartsApi.addToCart, action.payload);
     if (response) {
       yield put(cartAction.addToCartSuccess(action.payload));
+      yield put({ type: PRODUCTS.GET_PRODUCTS_REQUEST })
       toast.success('Cart added successfully');
     }
   } catch(error) {
